@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
+    <style>
+        * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .head-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 15px 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.details-container {
+  display: flex;
+  gap: 25px;
+}
+
+.details-container a {
+  text-decoration: none;
+  color: #2c3e50;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.details-container a:hover {
+  color: #27ae60;
+}
+
+.icon-container {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.icon-container a {
+  font-size: 1.3rem;
+  color: #2c3e50;
+  text-decoration: none;
+  position: relative;
+}
+
+.icon-container a:hover {
+  color: #27ae60;
+}
+
+.count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background-color: #e74c3c;
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    #container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .product-card {
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+      padding: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    .description {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
+    .price {
+      font-size: 1.1rem;
+      color: #27ae60;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .icons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .icons a {
+      text-decoration: none;
+      font-size: 1.2rem;
+      color: #555;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      transition: all 0.3s ease;
+    }
+
+    .icons a:hover {
+      background-color: #2c3e50;
+      color: #fff;
+      border-color: #2c3e50;
+    }
+
+    .wishlist i {
+      color: #e74c3c;
+    }
+
+    .wishlist:hover i {
+      color: #fff;
+    }
+
+    @media(max-width: 600px) {
+      .description {
+        height: auto;
+      }
+    }
+    </style>
+</head>
+<body>
+    <div class="head-container">
+        <p class="logo">Giftella</p>
+        <div class="details-container">
+            <a href="./index.html">Home</a>
+            <a href="">About</a>
+            <a href="./shop.html">Shop</a>
+            <a href="">Contact</a>
+            <a href="">Login</a>
+        </div>
+        <div class="icon-container">
+            <a href="./wishlist.html"><i class="ri-heart-line"></i></a>
+            <a href="./cart.html"><i class="ri-shopping-bag-line cart"></i> </a>
+        </div>
+
+    </div>
+    <div id="container"></div>
+    <script>
+       let container=document.getElementById("container")
+       var url="https://automatic-mesquite-diplodocus.glitch.me/Gifts"
+       async function getData()
+                {
+                    let response=await fetch(url)
+                    if(!response.ok)
+                    {
+                        throw new Error("HTTP Error",response.status)
+                    }
+                    let result=await response.json()
+                    console.log(result)
+                   
+                    displayData(result)
+                
+                }
+                function displayData(result)
+                {
+                    for(let ele of result)
+                    {
+                        if(ele.category=="Couple Gifts")
+                        {
+                          console.log(ele)
+                        let item=document.createElement("div")
+                            item.className = "product-card";
+                            let{image,title,price,id,category,description}=ele
+                            item.innerHTML=`
+                             <img src="${image}" alt="${title}">
+                             
+                            <h3 class="title">${title}</h3>
+                            <p class="description">${description}</p>
+                            <p class="price">₹${price}</p>
+                            <div class="icons">
+                                <a href="#" class="wishlist"><i class="ri-heart-line"></i></a>
+                                <a href="#"><i class="ri-shopping-bag-line cart"></i></a>
+                            </div>
+
+                            `
+                            item.querySelector(".wishlist").addEventListener("click", function (event)
+                            {
+                                event.preventDefault()
+                                let wishlistData=JSON.parse(localStorage.getItem("wishlist"))||[];
+                                wishlistData.push({image,title,price,id,category})
+
+                                localStorage.setItem("wishlist",JSON.stringify(wishlistData))
+                                alert("data added to wishlist")
+                            })
+                            item.querySelector(".cart").addEventListener("click", function (event)
+                            {
+                                event.preventDefault()
+                                let cartData=JSON.parse(localStorage.getItem("cart"))||[];
+                                cartData.push({image,title,price,id,category})
+
+                                localStorage.setItem("cart",JSON.stringify(cartData))
+                                alert("data added to cart")
+                            })
+                            container.appendChild(item)
+                        }
+                    }
+               } 
+               getData()
+    </script>
+</body>
+</html>
